@@ -16,22 +16,24 @@ Mark a task done by changing `[ ]` to `[x]`.
 
 ## 2. Application code (`app/`)
 
-- [ ] `app/__init__.py` (package marker)
-- [ ] `app/config.py` — `Settings` using pydantic-settings, loads env vars (openai key/model, kept but unused)
-- [ ] `app/services/__init__.py`
-- [ ] `app/services/langchain_service.py` — `LangChainService` class with `async def invoke(self, message: str) -> str` returning the static string
-- [ ] `app/dependencies.py` — dependency-injection providers (e.g. `get_langchain_service`, `get_settings`)
-- [ ] `app/api/__init__.py`
-- [ ] `app/api/routes.py` — `GET /health` and `POST /chat`; routes only delegate to the service, no business logic
-- [ ] Pydantic v2 request/response models for `/chat` (`ChatRequest`, `ChatResponse`)
-- [ ] `app/main.py` — create FastAPI app, include router
+- [x] `app/__init__.py` (package marker)
+- [x] `app/config.py` — `Settings` using pydantic-settings, loads env vars (openai key/model, kept but unused)
+- [x] `app/services/__init__.py`
+- [x] `app/services/langchain_service.py` — `LangChainService` class with `async def invoke(self, message: str) -> str` returning the static string
+- [x] `app/dependencies.py` — dependency-injection providers (e.g. `get_langchain_service`, `get_settings`)
+- [x] `app/api/__init__.py`
+- [x] `app/api/routes.py` — `GET /health` and `POST /chat`; routes only delegate to the service, no business logic
+- [x] Pydantic v2 request/response models for `/chat` (`ChatRequest`, `ChatResponse`)
+- [x] `app/main.py` — create FastAPI app, include router
 
 ## 3. Tests (`tests/`)
 
-- [ ] `tests/__init__.py`
-- [ ] `tests/test_health.py` — assert `GET /health` returns `{"status": "healthy"}`
-- [ ] `tests/test_chat.py` — assert `POST /chat` with `{"message": "Hello"}` returns `{"response": "Hello from LangChain service!"}`
-- [ ] Ensure all tests pass with `pytest`
+- [x] `tests/__init__.py`
+- [x] `tests/test_health.py` — assert `GET /health` returns `{"status": "healthy"}`
+- [x] `tests/test_chat.py` — assert `POST /chat` with `{"message": "Hello"}` returns `{"response": "Hello from LangChain service!"}`
+- [x] `tests/test_langchain_service.py` — unit test the service in isolation
+- [x] `tests/conftest.py` — async httpx client fixture (pytest-asyncio)
+- [x] Ensure all tests pass with `pytest`
 
 ## 4. CI — `.github/workflows/ci.yml`
 
