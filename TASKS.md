@@ -74,3 +74,39 @@ Mark a task done by changing `[ ]` to `[x]`.
 - [x] Every push to `main` triggers the deployment workflow
 - [x] Deployment workflow is production-ready except Azure placeholders
 - [x] Structure is clean, minimal, and easy to extend with OpenAI/RAG later
+
+---
+
+## 8. Azure provisioning & OIDC integration (make CI/CD work end to end)
+
+Prereqs: az CLI installed and logged in (`az login` done); `gh` CLI available
+and authenticated for setting GitHub secrets (or set them in the GitHub UI).
+
+### 8a. Provision the App Service (free F1)
+
+- [x] Decide/record names: RG `azure-test-rg`, plan `azure-test-plan`, app `azure-test-mohsen1932`, region `francecentral` (only region with F1 quota)
+- [x] Create resource group
+- [x] Create Linux App Service plan on the **Free (F1)** SKU
+- [x] Create the Web App with the **Python 3.11** runtime on that plan
+- [x] Set app setting `SCM_DO_BUILD_DURING_DEPLOYMENT=true` (Oryx builds from requirements.txt)
+- [x] Set the startup command (`python -m uvicorn app.main:app --host 0.0.0.0 --port 8000`)
+
+### 8b. Set up OIDC (federated identity, no secrets/publish profile)
+
+- [x] Create an Azure AD app registration (+ service principal) for GitHub Actions
+- [x] Assign it an RBAC role (Contributor) scoped to the resource group
+- [x] Add a federated credential for `repo:mohsen1932/azure-test:ref:refs/heads/main`
+- [x] Collect `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`
+
+### 8c. Wire up GitHub
+
+- [ ] Set repo secrets: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`
+- [ ] Put the real web app name into `deploy.yml` (`AZURE_WEBAPP_NAME`, non-secret) and commit
+- [ ] Push to `main` to trigger CI → deploy
+
+### 8d. End-to-end verification
+
+- [ ] CI workflow passes
+- [ ] Deploy workflow `verify` + `deploy` jobs both succeed
+- [ ] Live `GET /health` on the Azure URL returns `{"status":"healthy"}`
+- [ ] Live `POST /chat` on the Azure URL returns the service response
