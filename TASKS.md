@@ -43,12 +43,12 @@ Mark a task done by changing `[ ]` to `[x]`.
 
 ## 5. Deploy — `.github/workflows/deploy.yml`
 
-- [ ] Trigger: `push` to `main` only
-- [ ] Runs only if CI succeeds (gate on CI, e.g. `workflow_run` or job dependency)
-- [ ] Azure Login via OIDC (no publish profile)
-- [ ] Placeholder env/secrets: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`, `AZURE_RESOURCE_GROUP`, `AZURE_WEBAPP_NAME`
-- [ ] Placeholder steps: checkout → setup Python → install uv → build app → Azure Login (placeholder) → deploy to Azure Web App (placeholder)
-- [ ] All Azure-specific values left empty with clear `TODO` comments
+- [x] Trigger: `push` to `main` only
+- [x] Runs only if CI succeeds (gate on CI, e.g. `workflow_run` or job dependency)
+- [x] Azure Login via OIDC (no publish profile)
+- [x] Placeholder env/secrets: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`, `AZURE_RESOURCE_GROUP`, `AZURE_WEBAPP_NAME`
+- [x] Placeholder steps: checkout → setup Python → install uv → build app → Azure Login (placeholder) → deploy to Azure Web App (placeholder)
+- [x] All Azure-specific values left empty with clear `TODO` comments
 
 ## 6. Documentation — `README.md`
 

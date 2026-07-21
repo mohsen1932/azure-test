@@ -1,0 +1,89 @@
+name: Deploy
+
+# Deploy to Azure App Service on every push to main.
+on:
+  push:
+    branches:
+      - main
+
+# OIDC: required so azure/login can request a federated token.
+# No publish profile is used.
+permissions:
+  id-token: write
+  contents: read
+
+# TODO: create these as GitHub Actions secrets (Settings > Secrets and
+# variables > Actions). They are intentionally left as placeholders here.
+#   - AZURE_CLIENT_ID
+#   - AZURE_TENANT_ID
+#   - AZURE_SUBSCRIPTION_ID
+#   - AZURE_RESOURCE_GROUP
+#   - AZURE_WEBAPP_NAME
+env:
+  AZURE_RESOURCE_GROUP: "" # TODO: set (or use vars.AZURE_RESOURCE_GROUP)
+  AZURE_WEBAPP_NAME: "" # TODO: set (or use vars.AZURE_WEBAPP_NAME)
+
+jobs:
+  # Gate: deployment must execute only if these checks (same as CI) succeed.
+  verify:
+    name: Verify (lint & test)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Run Ruff
+        run: uv run ruff check .
+
+      - name: Run tests
+        run: uv run pytest
+
+  deploy:
+    name: Deploy to Azure Web App
+    needs: verify # deploy only runs if verify succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Build application
+        # Install locked dependencies to produce the deployable app.
+        run: uv sync --locked --no-dev
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          # TODO: set these secrets — values intentionally left as placeholders.
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          # TODO: set AZURE_WEBAPP_NAME (env above or a secret/var).
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: .
