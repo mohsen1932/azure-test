@@ -64,13 +64,13 @@ Mark a task done by changing `[ ]` to `[x]`.
 
 ## 7. Final verification (Acceptance Criteria)
 
-- [ ] App runs with `uv run uvicorn app.main:app --reload`
-- [ ] `GET /health` returns healthy
-- [ ] `POST /chat` returns the LangChain service response
-- [ ] LangChain service is isolated from FastAPI
-- [ ] All tests pass
-- [ ] Ruff passes
-- [ ] CI runs automatically on every push and pull request
-- [ ] Every push to `main` triggers the deployment workflow
-- [ ] Deployment workflow is production-ready except Azure placeholders
-- [ ] Structure is clean, minimal, and easy to extend with OpenAI/RAG later
+- [x] App runs with `uv run uvicorn app.main:app --reload`
+- [x] `GET /health` returns healthy
+- [x] `POST /chat` returns the LangChain service response
+- [x] LangChain service is isolated from FastAPI
+- [x] All tests pass
+- [x] Ruff passes
+- [x] CI runs automatically on every push and pull request
+- [x] Every push to `main` triggers the deployment workflow
+- [x] Deployment workflow is production-ready except Azure placeholders
+- [x] Structure is clean, minimal, and easy to extend with OpenAI/RAG later
