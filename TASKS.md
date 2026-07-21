@@ -52,14 +52,14 @@ Mark a task done by changing `[ ]` to `[x]`.
 
 ## 6. Documentation — `README.md`
 
-- [ ] uv installation instructions
-- [ ] `uv sync`
-- [ ] Running locally (`uv run uvicorn app.main:app --reload`)
-- [ ] Running tests (`pytest`)
-- [ ] Running Ruff
-- [ ] Environment variables
-- [ ] GitHub Actions overview
-- [ ] Azure deployment placeholders
+- [x] uv installation instructions
+- [x] `uv sync`
+- [x] Running locally (`uv run uvicorn app.main:app --reload`)
+- [x] Running tests (`pytest`)
+- [x] Running Ruff
+- [x] Environment variables
+- [x] GitHub Actions overview
+- [x] Azure deployment placeholders
 
 ## 7. Final verification (Acceptance Criteria)
 
