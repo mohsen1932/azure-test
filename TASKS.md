@@ -37,9 +37,9 @@ Mark a task done by changing `[ ]` to `[x]`.
 
 ## 4. CI — `.github/workflows/ci.yml`
 
-- [ ] Triggers: `push` and `pull_request`
-- [ ] Steps: checkout → setup Python 3.11 → install uv → `uv sync` → run Ruff → run pytest
-- [ ] Workflow fails if Ruff or pytest fails
+- [x] Triggers: `push` and `pull_request`
+- [x] Steps: checkout → setup Python 3.11 → install uv → `uv sync` → run Ruff → run pytest
+- [x] Workflow fails if Ruff or pytest fails
 
 ## 5. Deploy — `.github/workflows/deploy.yml`
 
