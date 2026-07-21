@@ -100,13 +100,14 @@ and authenticated for setting GitHub secrets (or set them in the GitHub UI).
 
 ### 8c. Wire up GitHub
 
-- [ ] Set repo secrets: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`
-- [ ] Put the real web app name into `deploy.yml` (`AZURE_WEBAPP_NAME`, non-secret) and commit
-- [ ] Push to `main` to trigger CI → deploy
+- [x] Set repo secrets: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`
+- [x] Put the real web app name into `deploy.yml` (`AZURE_WEBAPP_NAME`, non-secret) and commit
+- [x] Push to `main` to trigger CI → deploy
+- [x] Fix federated credential subject to GitHub's immutable form (`repo:mohsen1932@3251348/azure-test@1308020905:ref:refs/heads/main`)
 
 ### 8d. End-to-end verification
 
-- [ ] CI workflow passes
-- [ ] Deploy workflow `verify` + `deploy` jobs both succeed
-- [ ] Live `GET /health` on the Azure URL returns `{"status":"healthy"}`
-- [ ] Live `POST /chat` on the Azure URL returns the service response
+- [x] CI workflow passes
+- [x] Deploy workflow `verify` + `deploy` jobs both succeed
+- [x] Live `GET /health` on the Azure URL returns `{"status":"healthy"}`
+- [x] Live `POST /chat` on the Azure URL returns the service response
