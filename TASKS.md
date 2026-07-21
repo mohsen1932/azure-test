@@ -49,6 +49,7 @@ Mark a task done by changing `[ ]` to `[x]`.
 - [x] Placeholder env/secrets: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`, `AZURE_RESOURCE_GROUP`, `AZURE_WEBAPP_NAME`
 - [x] Placeholder steps: checkout → setup Python → install uv → build app → Azure Login (placeholder) → deploy to Azure Web App (placeholder)
 - [x] All Azure-specific values left empty with clear `TODO` comments
+- [x] Free F1 (code-based) target: export `requirements.txt` from `uv.lock` for Oryx, set uvicorn startup command, document `SCM_DO_BUILD_DURING_DEPLOYMENT` (test in `tests/test_requirements_export.py`)
 
 ## 6. Documentation — `README.md`
 

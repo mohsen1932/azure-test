@@ -14,6 +14,8 @@ env/
 
 # uv
 # (uv.lock IS committed; do not ignore it)
+# requirements.txt is generated from uv.lock at deploy time, not committed.
+requirements.txt
 
 # Environment / secrets
 .env

@@ -126,6 +126,16 @@ and the `deploy` job uses `needs: verify` so **deployment only runs if the
 checks succeed**. Authentication uses **Azure Login via OIDC** (no publish
 profile).
 
+The deploy target is a **code-based Azure App Service on the free F1 tier**
+(no Docker). Because App Service's Oryx build does not understand uv, the
+deploy job exports a `requirements.txt` from `uv.lock`
+(`uv export --frozen --no-dev`) so Oryx's `pip install` is reproducible. The
+app is started with:
+
+```text
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
 ## Azure deployment placeholders
 
 The deploy workflow is production-ready except for Azure-specific values, which
@@ -143,3 +153,11 @@ You will also need to configure a federated credential on the Azure AD app
 registration so GitHub's OIDC token is trusted for this repository. Until these
 are set, the deploy job's Azure steps are placeholders and will not perform a
 real deployment.
+
+On the Azure side (one-time), for the free F1 code-based deploy:
+
+- Create a **Linux, Python 3.11** App Service Web App on a **Free (F1)** plan.
+- Set the app setting **`SCM_DO_BUILD_DURING_DEPLOYMENT=true`** so Oryx runs
+  `pip install -r requirements.txt` on deploy.
+- The startup command is provided by the workflow (see above); it can also be
+  set on the Web App's **Configuration → Startup Command**.

@@ -69,9 +69,17 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Build application
-        # Install locked dependencies to produce the deployable app.
-        run: uv sync --locked --no-dev
+      - name: Export requirements.txt
+        # Azure App Service (F1, code-based) builds with Oryx, which expects a
+        # requirements.txt at the repo root — it does not understand uv. Export
+        # the locked runtime deps (with hashes) so Oryx's pip install is
+        # reproducible and matches uv.lock.
+        run: |
+          uv export --frozen --no-dev --no-emit-project \
+            --format requirements-txt -o requirements.txt
+          # Sanity check the export before shipping it.
+          grep -qiE '^fastapi==' requirements.txt
+          grep -qiE '^uvicorn==' requirements.txt
 
       - name: Azure Login (OIDC)
         uses: azure/login@v2
@@ -87,3 +95,9 @@ jobs:
           # TODO: set AZURE_WEBAPP_NAME (env above or a secret/var).
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: .
+          # Oryx builds the app from requirements.txt on the F1 App Service and
+          # this command starts the ASGI server. App Service provides $PORT.
+          startup-command: "python -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
+      # NOTE: on the Azure side the Web App must have the app setting
+      # SCM_DO_BUILD_DURING_DEPLOYMENT=true so Oryx runs pip install on deploy,
+      # and be created on a Linux Python 3.11 plan (F1). TODO: configure once.
